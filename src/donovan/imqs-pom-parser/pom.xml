@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>za.co.imqs</groupId>
+        <artifactId>imqs-parent</artifactId>
+        <version>1.0.3-SNAPSHOT</version>
+    </parent>
+
+    <groupId>za.co.imqs.importers</groupId>
+
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <artifactId>imqs-esri-importer</artifactId>
+    <description>
+        Service to be scheduled for importing ArcGIS data from ESRI
+    </description>
+
+    <scm>
+        <connection>scm:git:git@github.com:IMQS/imqs-esri-importer.git</connection>
+        <url>scm:git:git@github.com:IMQS/imqs-esri-importer.git</url>
+        <developerConnection>scm:git:git@github.com:IMQS/imqs-esri-importer.git</developerConnection>
+    </scm>
+
+    <properties>
+        <springframework.core>4.1.4.RELEASE</springframework.core>
+        <jsw.main.class>za.co.imqs.esri.arcgis.ArcgisRestService</jsw.main.class>
+        <jsw.log.config>/imqsbin/conf/log/imqs-esri-importer.groovy</jsw.log.config>
+        <jsw.configuration>file:///imqsbin/conf/imqs-esri-importer.json</jsw.configuration>
+        <assemble.descriptor>src/main/assembly/src.xml</assemble.descriptor>
+        <project.build.finalName>imqs-esri-importer</project.build.finalName>
+        <buildDirectory>${project.basedir}/target</buildDirectory>
+        <slf4j>1.7.5</slf4j>
+        <logback>1.0.13</logback>
+        <jackson>2.6.0</jackson>
+    </properties>
+
+    <dependencies>
+
+        <!-- ArcGIS Dependencies -->
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson}</version>
+        </dependency>
+
+        <!-- // End ArcGIS Dependencies -->
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>${slf4j}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <version>${slf4j}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback}</version>
+        </dependency>
+
+        <!-- Service Wrapper -->
+        <dependency>
+            <groupId>org.codehaus.mojo.appassembler</groupId>
+            <artifactId>appassembler</artifactId>
+            <version>1.10</version>
+            <type>pom</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esri.arcgis</groupId>
+            <artifactId>terraformer-java-master</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>za.co.imqs.configuration</groupId>
+            <artifactId>configuration-client</artifactId>
+            <version>1.0.2-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>za.co.imqs.webserver</groupId>
+            <artifactId>imqs-webserver</artifactId>
+            <version>2.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>za.co.imqs</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0.3-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>javax.servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
+
+        </dependency>
+
+        <dependency>
+            <groupId>za.co.imqs</groupId>
+            <artifactId>trustedauth</artifactId>
+            <version>1.0.2-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>javax.servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+            <version>1.12.2</version>
+        </dependency>
+
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${springframework.core}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+            <version>${springframework.core}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${springframework.core}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${springframework.core}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${springframework.core}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${springframework.core}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.4</version>
+        </dependency>
+
+        <!-- BoneCP -->
+        <dependency>
+            <groupId>com.jolbox</groupId>
+            <artifactId>bonecp</artifactId>
+            <version>0.8.0.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901-1.jdbc4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.james</groupId>
+            <artifactId>apache-mime4j-core</artifactId>
+            <version>0.7.2</version>
+        </dependency>
+
+        <!-- Testing -->
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${springframework.core}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.5</version>
+        </dependency>
+
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>deploy-application</id>
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>appassembler-maven-plugin</artifactId>
+                        <configuration>
+                            <daemons>
+                                <daemon>
+                                    <!-- If you override the jvmSettings, remember to override all of them -->
+                                    <jvmSettings>
+                                        <initialMemorySize>8</initialMemorySize>
+                                        <maxMemorySize>8192</maxMemorySize>
+                                        <maxStackSize>1</maxStackSize>
+                                        <systemProperties>
+                                            <systemProperty>log_name=${project.artifactId}</systemProperty>
+                                            <systemProperty>logback.configurationFile=${jsw.log.config}</systemProperty>
+                                            <systemProperty>file.encoding=UTF-8</systemProperty>
+                                        </systemProperties>
+                                        <extraArguments>
+                                            <extraArgument>-Xminf0.4</extraArgument>
+                                            <extraArgument>-Xmaxf0.7</extraArgument>
+                                        </extraArguments>
+                                    </jvmSettings>
+                                </daemon>
+                            </daemons>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>
